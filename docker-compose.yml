@@ -1,0 +1,39 @@
+version: "3"
+services:
+
+  model:
+    container_name: model
+    build: 
+      context: ./model
+      args: 
+        - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_MODEL_STORE=${AWS_MODEL_STORE}
+        - MODEL_NAME=${MODEL_NAME}
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD" , "curl", "http://localhost:8080/ping"]
+      timeout: 1m
+
+  flask:
+    container_name: flask
+    build:
+      context: ./flask
+    ports:
+      - "5000:5000"
+    depends_on:
+      - model
+    environment:
+      - MODEL_NAME=${MODEL_NAME}
+
+  frontend:
+    build: ./frontend
+    ports: 
+      - "3000:80"
+    depends_on:
+      - flask
+    container_name: frontend
+
