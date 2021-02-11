@@ -1,4 +1,4 @@
-# create-pytorch-demo
+# create-pytorch-app
 
 Clone this repo to spin up an ML web app using React, Flask and Torchserve. 
 
