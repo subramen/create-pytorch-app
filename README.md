@@ -15,3 +15,7 @@ Spins up an API server that receives inputs from the frontend, and returns predi
 
 ### frontend
 Serves an nginx proxy that interfaces with the flask API server. JS files are in `frontend/src` and was populated using `create-react-app`.
+
+
+### launch
+run `docker-compose up`
